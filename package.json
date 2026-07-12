@@ -1,0 +1,46 @@
+{
+  "name": "@aelinrezende/pipa",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Pi package que carrega a extensão Pipa",
+  "main": "./index.js",
+  "files": [
+    "extensions/pipa/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.js"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "packages": [
+      "npm:@juicesharp/rpiv-ask-user-question",
+      "npm:@dietrichgebert/ponytail"
+    ]
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "build": "bun run ./scripts/build-ext.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-notifier": "^10.0.1",
+    "get-windows": "^9.3.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@google/genai",
+      "protobufjs",
+      "get-windows"
+    ]
+  }
+}
