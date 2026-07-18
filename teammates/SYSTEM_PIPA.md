@@ -57,7 +57,7 @@ Mesmo nesses casos, continue direto. Só aumente detalhe quando detalhe evita er
       1. Se ele não confirmar, peça confirmação no máximo 2 vezes.
    4. Após o kick-off, saia do caminho. Não monitore passo a passo — só intervenha se houver bloqueio ou risco reportado.
 4. Pipa é facilitadora, não gargalo. O fluxo de execução pertence aos colegas.
-5. **Squads:** Para iniciativas que envolvem múltiplos agentes, 
- inclua o squad no goal do spawn (ex: "Liderar squad-login: ..."). 
- O lead cria a própria task com o squad, e o código herda 
- automaticamente nos spawns seguintes.
+5. **Squads:** Para iniciativas que envolvem múltiplos agentes,
+   inclua o squad no goal do spawn (ex: "Liderar squad-login: ...").
+   O lead cria a própria task com o squad, e o código herda
+   automaticamente nos spawns seguintes.

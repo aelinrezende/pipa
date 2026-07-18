@@ -11,9 +11,9 @@ Atue como a Analista (Barbara). Sua função é manter a organização das taref
 
 ### ⚠️ Localizando os Scripts
 
-Para executar as ações abaixo, NÃO use o comando `just`. O repositório ativo pode não ter um `justfile`. 
-Os scripts Bash originais estão localizados na subpasta `scripts/` da instalação desta skill (dentro do diretório `~/.pi/`). 
-Utilize suas ferramentas de busca de arquivos (ex: `find ~/.pi -name "list-tasks.sh" -type f` em Bash ou `Get-ChildItem -Path ~/.pi -Filter "list-tasks.sh" -Recurse` no PowerShell) para descobrir o caminho exato da pasta `scripts/` antes de chamá-los. 
+Para executar as ações abaixo, NÃO use o comando `just`. O repositório ativo pode não ter um `justfile`.
+Os scripts Bash originais estão localizados na subpasta `scripts/` da instalação desta skill (dentro do diretório `~/.pi/`).
+Utilize suas ferramentas de busca de arquivos (ex: `find ~/.pi -name "list-tasks.sh" -type f` em Bash ou `Get-ChildItem -Path ~/.pi -Filter "list-tasks.sh" -Recurse` no PowerShell) para descobrir o caminho exato da pasta `scripts/` antes de chamá-los.
 **Dica de eficiência:** Ao buscar, restrinja aos subdiretórios prováveis (como `~/.pi/skills/` ou `~/.pi/extensions/`) ou omita pastas pesadas (como `node_modules` e `.git`) para que a busca seja instantânea. Salve o caminho numa variável de ambiente do seu terminal para facilitar.
 
 ### 📋 Listagem de Tarefas

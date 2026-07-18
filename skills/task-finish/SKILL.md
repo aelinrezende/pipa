@@ -40,12 +40,7 @@ Para executar esta skill com sucesso:
     - Agentes **NÃO** fazem merge de Pull Requests.
     - Apenas apresente o link da PR para o usuário, informando que a PR foi revisada pelo Thiago e está pronta para que o próprio usuário faça o merge manual.
 
-6.5. **Comando de Teste Local:**
-    - O agente deve analisar a raiz do projeto (ou `package.json` / lockfiles) para descobrir o gerenciador de pacotes (ex: `bun`, `pnpm`, `npm`, `yarn`).
-    - Formule o comando exato para o usuário rodar e testar a branch/worktree (ex: `dev`, `start`).
-    - **Worktrees:** Se o projeto usa worktrees e o diretório da implementação não é a raiz atual do terminal do usuário, embutir a flag de diretório no comando (ex: `bun --cwd <caminho_da_worktree> run dev` ou `pnpm --dir <caminho_da_worktree> run dev`).
-    - **Escopos/Filtros:** Se a alteração for específica de um pacote no monorepo (ex: um ambiente de UI mockada, ou backend isolado), inclua o filtro correspondente (ex: `--filter <nome-do-pacote>`).
-    - Apresente esse comando em um bloco de código markdown no chat para facilitar o copy/paste.
+6.5. **Comando de Teste Local:** - O agente deve analisar a raiz do projeto (ou `package.json` / lockfiles) para descobrir o gerenciador de pacotes (ex: `bun`, `pnpm`, `npm`, `yarn`). - Formule o comando exato para o usuário rodar e testar a branch/worktree (ex: `dev`, `start`). - **Worktrees:** Se o projeto usa worktrees e o diretório da implementação não é a raiz atual do terminal do usuário, embutir a flag de diretório no comando (ex: `bun --cwd <caminho_da_worktree> run dev` ou `pnpm --dir <caminho_da_worktree> run dev`). - **Escopos/Filtros:** Se a alteração for específica de um pacote no monorepo (ex: um ambiente de UI mockada, ou backend isolado), inclua o filtro correspondente (ex: `--filter <nome-do-pacote>`). - Apresente esse comando em um bloco de código markdown no chat para facilitar o copy/paste.
 
 7.  **Atualização do Backlog Local:**
     - Leia o arquivo `NOVA-TAREFA.*.md`.
@@ -87,6 +82,7 @@ Para executar esta skill com sucesso:
 Link da PR: `https://github.com/aelinrezende/juba-frontend/pull/71`
 
 Para testar localmente antes do merge, rode:
+
 ```bash
 bun --cwd .worktrees/JUBA-41 run dev
 ```

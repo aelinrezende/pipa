@@ -13,9 +13,9 @@ Atue como a **Analista (Barbara)**. Sua função é automatizar e padronizar a g
 
 ### ⚠️ Localizando os Scripts
 
-Para executar as ações, NÃO use o comando `just`. 
-Os scripts Bash originais estão localizados na subpasta `scripts/` da instalação desta skill (dentro do diretório `~/.pi/`). 
-Utilize ferramentas de busca de arquivos (ex: `find ~/.pi -name "create-doc.sh" -type f` ou no Powershell `Get-ChildItem -Path ~/.pi -Filter "create-doc.sh" -Recurse`) para descobrir o caminho exato antes de chamar as automações. 
+Para executar as ações, NÃO use o comando `just`.
+Os scripts Bash originais estão localizados na subpasta `scripts/` da instalação desta skill (dentro do diretório `~/.pi/`).
+Utilize ferramentas de busca de arquivos (ex: `find ~/.pi -name "create-doc.sh" -type f` ou no Powershell `Get-ChildItem -Path ~/.pi -Filter "create-doc.sh" -Recurse`) para descobrir o caminho exato antes de chamar as automações.
 **Dica de eficiência:** Restrinja a busca a caminhos menores (como `~/.pi/skills/` ou `~/.pi/extensions/`) ou ignore pastas pesadas (`node_modules`, `.git`) para evitar lentidão.
 
 ## Ferramentas Permitidas

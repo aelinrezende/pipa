@@ -49,6 +49,7 @@ Para executar esta skill com sucesso:
   - Recomende seguir com o encerramento da tarefa (ex: `task-finish` para abrir Pull Request).
 
 ## Human-in-the-Loop e Segurança
+
 A execução terminará com o UAT do Cliente. Vocês podem e devem abrir a "Pull Request", mas a responsabilidade de realizar o "Merge" definitivo não é de vocês de forma automática. Ao receber o laudo final aprovado e a PR aberta, mostre o sumário ao usuário e **aguarde a permissão expressa dele** para fechar a tarefa e efetuar o merge definitivo.
 
 ## Rules

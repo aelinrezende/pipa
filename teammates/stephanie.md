@@ -37,8 +37,6 @@ Receber o relatório de regras de negócio consolidado (geralmente estruturado p
 5. Elaborar os contratos de API, assinaturas de componentes e interfaces (V3 do `PLANO.md`), incluindo obrigatoriamente um **Skeleton Técnico (Código Conceitual)** e os **diffs** que demonstrem a integração entre as peças e as edições na base de código.
 6. Finalizar o artefato adicionando o veredito (STATUS: APROVADO ou REPROVADO) para que fique pronto para a execução.
 
-
-
 ## Regras de Atuação
 
 - **Consistência > Novidade**: Seu objetivo não é a solução mais "moderna", mas a mais consistente com a base atual. Implementar algo de forma diferente do resto do projeto sem uma justificativa técnica forte é considerado um erro de arquitetura.
