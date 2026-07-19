@@ -18,7 +18,7 @@ Com a evolução da Pipa, ela passou a orquestrar fluxos locais complexos, inclu
 
 ### 📋 Gerenciamento de Tarefas & To-do
 
-Sistema de _guards_ que exige que o agente crie e reivindique tarefas (tools `task-manager`) antes de executar ações de código, mantendo o foco e evitando alucinações.
+Sistema de _guards_ que exige que o agente crie e reivindique tarefas (tools `task-manager`) antes de executar ações de modificação (como ferramentas de sistema, write, edit, run_command), mantendo o foco e evitando alucinações.
 
 **Fluxo de Execução (Guard de Tarefas):**
 
@@ -29,7 +29,7 @@ graph TD
     CheckTask -->|Não| Blocked[❌ Ação Bloqueada]
     Blocked --> CreateTask[Usa `task-manager` para Criar Tarefa]
     CreateTask --> ClaimTask[Reivindica a Tarefa]
-    ClaimTask --> Execute[Libera Execução de Código]
+    ClaimTask --> Execute[Libera Execução da Tool]
     CheckTask -->|Sim| Execute
     Execute --> CompleteTask[Conclui a Tarefa]
 ```
@@ -43,22 +43,17 @@ Suporte nativo para criar, invocar e coordenar subagentes independentes na mesma
 ```mermaid
 graph TD
     Start([Início / NOVA-TAREFA]) --> Orquestrador[Orquestrador]
-    Orquestrador --> Barbara[1. PM: Barbara]
-    Barbara -->|Ambiguidades?| User([Usuário])
-    User -->|Respostas| Barbara
-    Barbara -->|Escopo Definido| Stephanie[2. Tech Lead: Stephanie]
-    Stephanie -->|Opções V1| User
-    User -->|Escolhe Opção| Stephanie
-    Stephanie -->|Cria V2 e V3| Jefferson[3. QA/Riscos: Jefferson]
-    Jefferson -->|Levanta Riscos| Stephanie
-    Stephanie -.->|Refina Plano| Jefferson
-    Jefferson -->|Plano Auditado| User
-    User -->|Aprovação Final| Aelin[4. Execução: Aelin]
-    Aelin -->|Abre PR| Thiago[5. Code Review: Thiago]
-    Thiago -->|Apontamentos| Aelin
-    Thiago -->|PR Aprovada| Cliente[6. UAT: Cliente]
-    Cliente -->|Atritos de UX| Aelin
-    Cliente -->|Validação Final| End([Entrega Concluída])
+    Orquestrador --> PM[1. Analista: Bárbara]
+    PM -->|Ambiguidades?| User([Usuário])
+    User -->|Respostas| PM
+    PM -->|Escopo Definido| Creator[2. Especialista: Aelin]
+    Creator -->|Opções de Design| User
+    User -->|Escolhe Opção| Creator
+    Creator -->|Cria V2 e V3| Reviewer[3. Revisor: Jefferson]
+    Reviewer -->|Levanta Riscos| Creator
+    Creator -.->|Refina Plano| Reviewer
+    Reviewer -->|Trabalho Auditado| User
+    User -->|Validação Final| End([Entrega Concluída])
 ```
 
 Para criar um novo colega, basta adicionar um arquivo markdown na pasta (ex: `.pi/teammates/revisor.md`) utilizando a seguinte estrutura de _frontmatter_ e corpo:
@@ -66,11 +61,13 @@ Para criar um novo colega, basta adicionar um arquivo markdown na pasta (ex: `.p
 ```markdown
 ---
 name: 'revisor'
-spawnableTeammates: ['qa', 'linter']
-description: 'Especialista em revisar PRs, aplicar regras de clean code e garantir segurança.'
+description: 'Especialista em revisar os textos gerados, garantir os padrões e levantar riscos.'
+spawnableTeammates:
+  redator: 'Para reescrever ou gerar novos trechos de conteúdo'
+  qa: 'Para realizar a leitura final e validação'
 ---
 
-Você é um revisor de código sênior...
+Você é um revisor especialista sênior...
 (Suas instruções detalhadas entram aqui)
 ```
 
