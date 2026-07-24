@@ -1,5 +1,5 @@
 ---
-name: task-finish
+name: finish
 description: Finaliza o ciclo de vida de uma tarefa, consolidando as mudanças em uma Pull Request, realizando o merge, atualizando o backlog local e a documentação local.
 ---
 
@@ -64,7 +64,7 @@ Para executar esta skill com sucesso:
 ## Examples
 
 **Input:**
-`/finish-task`
+`/finish`
 
 **Output:**
 **Finalizando a tarefa JUBA-41...**

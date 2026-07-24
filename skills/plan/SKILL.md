@@ -1,6 +1,6 @@
 ---
-name: task-plan
-description: Use esta skill quando precisar planejar uma tarefa. Acione para orquestrar a equipe de agentes (Barbara, Stephanie, Jefferson) na construção do PLANO.md evolutivo (V1 -> V2 -> V3) a partir da NOVA-TAREFA.*.md. Integra a estrutura de backlog local com o contexto do projeto.
+name: plan
+description: Planeja uma tarefa orquestrando a equipe de agentes (Barbara, Stephanie, Jefferson) na construção do PLANO.md evolutivo (Setup -> V1 -> V2 -> V3) a partir da NOVA-TAREFA.*.md. Inclui etapa de setup de worktree/branch e integra backlog local com contexto do projeto.
 ---
 
 # Planejar Tarefa
@@ -12,6 +12,23 @@ Para orquestrar esta skill, você deve acionar a **Tech Lead (Stephanie)** logo 
 **Antes de qualquer ação, consulte `code/PROJECT-REFERENCE.md` para conhecer hooks, componentes e padrões disponíveis — isso evita reimplementar o que já existe.**
 
 Nota: se for fornecido um código de tarefa como argumento, busque os dados iniciais usando o comando `just backlog-list --limit 1 code=<código>` e trate a saída como o conteúdo de `NOVA-TAREFA.<nome-da-tarefa>.md` para iniciar o fluxo.
+
+### 0. Setup de Ambiente (Antes de qualquer planejamento)
+
+Antes de iniciar a definição de escopo, prepare o ambiente isolado de desenvolvimento:
+
+1. **Identificar a Branch:** Obtenha o nome da branch da tarefa definido na `NOVA-TAREFA.*.md` ou sugerido pelo usuário.
+2. **Garantir Diretório de Worktrees:** Verifique se o diretório `.worktrees/` existe na raiz do projeto. Se não, crie-o.
+3. **Criar/Atualizar Branch:**
+   - Certifique-se de que a branch de base (ex: `dev`) está atualizada.
+   - Crie a branch da tarefa a partir da base, caso ela ainda não exista.
+4. **Criar Worktree:**
+   - Utilize `git worktree add .worktrees/<branch-name> <branch-name>`.
+   - Se a branch for nova, use `git worktree add -b <branch-name> .worktrees/<branch-name> <base-branch>`.
+5. **Validar Ambiente:** Verifique se os arquivos foram clonados corretamente para a worktree.
+6. **Sinalizar Mudança de Contexto:** Informe ao usuário que a partir de agora, todas as edições, leituras e comandos de bash devem ser executados dentro do caminho `.worktrees/<branch-name>/`.
+
+> O setup é executado automaticamente como fase inicial do plano, eliminando a necessidade de uma skill separada.
 
 ### 1. Definição de Escopo (Delegação: Agente Barbara)
 
@@ -37,12 +54,21 @@ Com a opção escolhida pelo usuário:
 - ANTES de aprovar o passo a passo como definitivo para o desenvolvimento, a **`stephanie`** deve invocar o **`jefferson`** via **teammates** para que este analise criticamente a V2/V3 gerada. Ele procurará por cenários "unhappy path", falhas de arquitetura e edge cases.
 - Repasse as pontuações e riscos levantados pelo `jefferson` para que a `stephanie` fortaleça e atualize as seções no `PLANO.md`.
 
-### 4. Transição para Execução (Delegação: Agente Aelin)
+### 4. Apresentação e Aprovação do Plano (Usuário)
 
-Quando o `PLANO.md` (V3) estiver finalmente auditado pelos três, mitigado de riscos e em sua versão mais fina, confirmada pelo usuário:
+Com o `PLANO.md` (V3) auditado pelo Jefferson e refinado pela Stephanie:
 
-- **Encerramento:** Conclua o processo de planejamento técnico (Task Plan).
-- **Aviso:** Indique explicitamente ao usuário que agora o comando `/task-execute` deve ser chamado para realizar a execução e codificação real.
+1. **Apresente o plano completo ao usuário** — exiba o sumário executivo do `PLANO.md`: objetivo, arquitetura escolhida, fases, contratos e riscos mitigados.
+2. **Pare e aguarde aprovação explícita.** Pergunte: _"O plano está aprovado? Posso iniciar a implementação?"_
+3. O plano só avança pra execução após o usuário responder **"sim"** ou **"de acordo"** explicitamente.
+4. Se o usuário pedir ajustes, retorne pra Stephanie refinar e volte ao passo 1.
+
+### 5. Transição para Execução
+
+Após aprovação explícita do usuário:
+
+- **Encerramento:** Conclua o processo de planejamento técnico (Plan).
+- **Aviso:** Informe ao usuário que agora o comando `/execute` deve ser chamado para realizar a codificação real seguindo o plano aprovado.
 
 ## Human-in-the-Loop (Segurança)
 
@@ -52,7 +78,8 @@ Apesar da delegação ocorrer autonomamente entre os subagentes, o avanço entre
 
 ```mermaid
 graph TD
-    Start([Início / NOVA-TAREFA]) --> Orquestrador[Orquestrador]
+    Start([Início / NOVA-TAREFA]) --> Setup[0. Setup: Worktree]
+    Setup --> Orquestrador[Orquestrador]
     Orquestrador --> Barbara[1. PM: Barbara]
     Barbara -->|Ambiguidades?| User([Usuário])
     User -->|Respostas| Barbara
@@ -63,7 +90,8 @@ graph TD
     Jefferson -->|Levanta Riscos| Stephanie
     Stephanie -.->|Refina Plano| Jefferson
     Jefferson -->|Plano Auditado| User
-    User -->|Aprovação Final| Aelin[4. Execução: Aelin]
+    User -->|Aprovação Explícita| Aelin[4. Aprovação]
+    Aelin -->|De Acordo| Exec[5. Execução: Aelin]
 ```
 
 ## Rules
@@ -74,7 +102,7 @@ graph TD
 ## Examples
 
 **Input:**
-`/task-plan JUBA-456`
+`/plan JUBA-456`
 
 **Output:**
 **Orquestrando contexto de produto com a PM: Invocando agente `barbara`...**

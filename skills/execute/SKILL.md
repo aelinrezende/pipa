@@ -1,6 +1,6 @@
 ---
-name: task-execute
-description: Use esta skill para iniciar e orquestrar a execução técnica de uma tarefa já planejada. Ela delega a codificação para a agente Aelin, garantindo que o plano aprovado seja implementado de forma incremental e validada.
+name: execute
+description: Inicia e orquestra a execução técnica de uma tarefa já planejada. Delega a codificação para a agente Aelin, garantindo que o plano aprovado seja implementado de forma incremental e validada.
 ---
 
 # Executar Tarefa
@@ -16,8 +16,8 @@ Para executar esta skill com sucesso:
 ### 1. Validação de Pré-requisitos
 
 - Verifique se `.artifacts/<nome-da-tarefa>/PLANO.md` existe, se possui a V3 (Definição Técnica) preenchida e se está aprovado.
-- Confirme se o ambiente já foi preparado (nova worktree ou branch isolada via skill de setup).
-- Sem plano aprovado, recuse o início e oriente o uso da skill `task-plan`.
+- Confirme se o ambiente já foi preparado (worktree/branch isolada, conforme etapa de Setup incluída no `plan`).
+- Sem plano aprovado, recuse o início e oriente o uso da skill `plan`.
 
 ### 2. Início da Execução (Agente Aelin)
 
@@ -46,7 +46,7 @@ Para executar esta skill com sucesso:
 
 - Com o endosso final do **`cliente`**:
   - Exiba o `EXECUTION-REPORT.md` finalizado e o Veredito do UAT.
-  - Recomende seguir com o encerramento da tarefa (ex: `task-finish` para abrir Pull Request).
+  - Recomende seguir com o encerramento da tarefa (ex: `finish` para abrir Pull Request).
 
 ## Human-in-the-Loop e Segurança
 
@@ -57,12 +57,12 @@ A execução terminará com o UAT do Cliente. Vocês podem e devem abrir a "Pull
 - **Não implemente sozinho:** Delegue a execução para a Aelin e supervisione o progresso via artefatos de report.
 - **Paralelismo Seguro:** Confie na Aelin para orquestrar a Legião de Belles, garantindo que as subtasks sejam independentes.
 - **Validação Técnica Rigorosa:** Garanta que a Aelin comprove a execução dos testes estáticos (lint, ts-check, format-check) no frontend e o sucesso do build no backend.
-- **Garantia de UAT:** Você só pode considerar o task-execute encerrado depois que o `cliente` rodar sua homologação (Laudo de Aceite) sobre o código gerado.
+- **Garantia de UAT:** Você só pode considerar a execução encerrada depois que o `cliente` rodar sua homologação (Laudo de Aceite) sobre o código gerado.
 
 ## Examples
 
 **Input:**
-`/task-execute`
+`/execute`
 
 **Output:**
 **Validando artefatos de planejamento...**

@@ -1,6 +1,6 @@
 ---
 name: nova-tarefa
-description: 'Cria arquivo NOVA-TAREFA.<slug>.md usando template NOVAS-TAREFAS com investigação agentica de arquivos, critérios de aceite inferidos por agente/docs e validação final contra @docs. USE sozinha e antes de /skill:task-plan quando: criar nova tarefa com contexto do código, gerar tarefa a partir de docs, preparar escopo agentico.'
+description: 'Cria arquivo NOVA-TAREFA.<slug>.md usando template NOVAS-TAREFAS com investigação agentica de arquivos, critérios de aceite inferidos por agente/docs e validação final contra @docs. USE sozinha e antes de /skill:plan quando: criar nova tarefa com contexto do código, gerar tarefa a partir de docs, preparar escopo agentico.'
 ---
 
 # Nova Tarefa
@@ -14,11 +14,11 @@ O arquivo gerado deve ter escopo pequeno, bem reduzido e executável em uma tare
 ## Uso com outras skills
 
 - Invoke `nova-tarefa` sozinha: não combine esta skill com outras skills no mesmo pedido ou fluxo.
-- Execute `nova-tarefa` antes de `/skill:task-plan`.
-- O arquivo `.artifacts/<nome-da-tarefa>/NOVA-TAREFA.md` gerado por esta skill alimenta etapa posterior `/skill:task-plan`.
-- `nova-tarefa` não substitui `/skill:task-plan`: ela reduz coleta braçal; `/skill:task-plan` valida decisões, trade-offs e riscos antes de planejar.
-- Se não houver decisão aberta, `/skill:task-plan` pode ser etapa curta de confirmação.
-- Não chame `/skill:task-plan` automaticamente. Ao concluir, reporte caminho criado, aponte pontos vagos/incertos apenas no relatório final quando existirem e diga: se estiver tudo ok após revisão, executar `/skill:task-plan` usando arquivo gerado como contexto.
+- Execute `nova-tarefa` antes de `/skill:plan`.
+- O arquivo `.artifacts/<nome-da-tarefa>/NOVA-TAREFA.md` gerado por esta skill alimenta etapa posterior `/skill:plan`.
+- `nova-tarefa` não substitui `/skill:plan`: ela reduz coleta braçal; `/skill:plan` valida decisões, trade-offs e riscos antes de planejar.
+- Se não houver decisão aberta, `/skill:plan` pode ser etapa curta de confirmação.
+- Não chame `/skill:plan` automaticamente. Ao concluir, reporte caminho criado, aponte pontos vagos/incertos apenas no relatório final quando existirem e diga: se estiver tudo ok após revisão, executar `/skill:plan` usando arquivo gerado como contexto.
 
 ## Workflow
 
@@ -124,7 +124,7 @@ O arquivo gerado deve ter escopo pequeno, bem reduzido e executável em uma tare
 13. Valide por leitura do arquivo salvo que todas seções numeradas de 1 a 7 estão presentes, que instrução MCP foi preservada e que o arquivo não contém incertezas internas.
 14. Reporte caminho criado, arquivos/docs usados, recorte escolhido, critérios inferidos e validações executadas.
 15. Inclua no relatório final `Pontos para revisar` quando houver incertezas, dúvidas ou decisões não bloqueantes. Se não houver, diga: `Nenhum ponto vago identificado.`
-16. Sugira explicitamente próximo passo condicional: `Se estiver tudo ok após revisar os pontos acima, execute /skill:task-plan usando .artifacts/<nome-da-tarefa/NOVA-TAREFA.md como contexto.` Não invoque `/skill:task-plan` automaticamente.
+16. Sugira explicitamente próximo passo condicional: `Se estiver tudo ok após revisar os pontos acima, execute /skill:plan usando .artifacts/<nome-da-tarefa/NOVA-TAREFA.md como contexto.` Não invoque `/skill:plan` automaticamente.
 
 ## Regras de formatação
 
@@ -156,4 +156,4 @@ O arquivo gerado deve ter escopo pequeno, bem reduzido e executável em uma tare
 - Arquivo preserva as 7 seções do template e instrução estrita MCP.
 - Arquivo final não contém incertezas, dúvidas, premissas fracas ou decisões abertas como requisitos.
 - Relatório final informa arquivo criado, arquivos/docs usados, validações executadas e `Pontos para revisar` quando existirem.
-- Relatório final sugere próximo passo de forma condicional: se estiver tudo ok após revisão, usar `/skill:task-plan` com arquivo gerado como contexto.
+- Relatório final sugere próximo passo de forma condicional: se estiver tudo ok após revisão, usar `/skill:plan` com arquivo gerado como contexto.
