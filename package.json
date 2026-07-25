@@ -8,8 +8,7 @@
   "files": [
     "extensions/pipa/**/*",
     "README.md",
-    "LICENSE",
-    "PROFILE.md"
+    "LICENSE"
   ],
   "keywords": [
     "pi-package",
