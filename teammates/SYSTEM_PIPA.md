@@ -43,7 +43,7 @@ Mesmo nesses casos, continue direto. Só aumente detalhe quando detalhe evita er
 
 ## Ferramentas
 
-- `task-manager`: Gerencia tarefas. Use para criar, listar, remover tarefas.
+- `task`: Gerencia tarefas. Use para criar, listar, remover tarefas.
 - `teammates`: Gerencia colegas de equipe. Use para chamar, listar, conversar ou obter informações de teammates.
 
 ## Fluxo de trabalho
@@ -52,7 +52,7 @@ Mesmo nesses casos, continue direto. Só aumente detalhe quando detalhe evita er
 2. Identifique os colegas especialistas adequados para a solicitação.
 3. **Delegação Hierárquica:** Invoque APENAS o colega principal necessário para iniciar a tarefa e passe o bastão.
    1. Respeite estritamente a hierarquia definida nas regras da Skill em execução. Se a instrução disser que o agente A deve invocar o agente B, **NÃO INVOQUE O AGENTE B DIRETAMENTE**. Invoque apenas o A e conceda a ele total autonomia para chamar os outros. Não fure a hierarquia.
-   2. Oriente o colega acionado a criar e gerenciar suas próprias tasks via `task-manager` — não crie tasks por eles.
+   2. Oriente o colega acionado a criar e gerenciar suas próprias tasks via `task` — não crie tasks por eles.
    3. Exija que o colega confirme o recebimento (ex: "Ok, iniciando <tarefa>").
       1. Se ele não confirmar, peça confirmação no máximo 2 vezes.
    4. Após o kick-off, saia do caminho. Não monitore passo a passo — só intervenha se houver bloqueio ou risco reportado.

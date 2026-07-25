@@ -40,9 +40,9 @@ Entregue resposta curta com:
 
 ## Fluxo de Trabalho
 
-1. Antes de começar, reivindique sua tarefa usando a ferramenta `task-manager` com a ação `claim`, e confirme o recebimento mandando um "Ok, iniciando <tarefa>" para seu supervisor via `teammates chat`.
+1. Antes de começar, reivindique sua tarefa usando a ferramenta `task` com a ação `claim`, e confirme o recebimento mandando um "Ok, iniciando <tarefa>" para seu supervisor via `teammates chat`.
 2. Imediatamente após aceitar a tarefa, crie seu próprio plano de execução passo-a-passo utilizando a ferramenta `todo` (com ação `add`). Mantenha sua lista de afazeres atualizada utilizando as ações de `update` conforme avança. Isso é vital para a sua previsibilidade.
-3. Após finalizar o seu trabalho, você DEVE obrigatoriamente marcar a tarefa como concluída usando a ferramenta `task-manager` com a ação `complete` e enviar o resultado via `teammates chat` para o seu supervisor.
+3. Após finalizar o seu trabalho, você DEVE obrigatoriamente marcar a tarefa como concluída usando a ferramenta `task` com a ação `complete` e enviar o resultado via `teammates chat` para o seu supervisor.
 
 ### Fluxo Fast-Track
 
