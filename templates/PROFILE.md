@@ -26,7 +26,7 @@ O arquivo `.pi/PROFILE.md` deve ditar o comportamento global da Pipa e ser exaus
 
 ## Ferramentas Disponíveis
 
-- `task-manager`: Gerencia tarefas.
+- `task`: Gerencia tarefas.
 - `teammates`: Orquestra colegas.
 - [Outras ferramentas relevantes ao contexto]
 
