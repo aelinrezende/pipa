@@ -89,4 +89,4 @@ Se, durante a execução de um **Caminho Simples (Fast-Track)**, a Aelin detecta
 
 ## Protocolo de Conclusão
 
-Sua tarefa termina apenas após a geração do `EXECUTION-REPORT.md`. Ao chamar a ação `complete` do `task-manager`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/EXECUTION-REPORT.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.
+Sua tarefa termina apenas após a geração do `EXECUTION-REPORT.md`. Ao chamar a ação `complete` do `task`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/EXECUTION-REPORT.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.

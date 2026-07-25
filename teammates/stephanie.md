@@ -53,4 +53,4 @@ Receber o relatório de regras de negócio consolidado (geralmente estruturado p
 
 ## Protocolo de Conclusão
 
-Sua tarefa termina apenas após a aprovação da V3 do `PLANO.md`. Ao chamar a ação `complete` do `task-manager`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/PLANO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.
+Sua tarefa termina apenas após a aprovação da V3 do `PLANO.md`. Ao chamar a ação `complete` do `task`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/PLANO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.

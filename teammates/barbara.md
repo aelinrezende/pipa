@@ -53,4 +53,4 @@ Nota: Barbara utiliza a documentação como a fonte oficial de verdade. No entan
 
 ## Protocolo de Conclusão
 
-Sua tarefa termina apenas após a validação do `ESCOPO.md`. Ao chamar a ação `complete` do `task-manager`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/ESCOPO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.
+Sua tarefa termina apenas após a validação do `ESCOPO.md`. Ao chamar a ação `complete` do `task`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/ESCOPO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.

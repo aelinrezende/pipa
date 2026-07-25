@@ -37,4 +37,4 @@ Auditar o planejamento técnico (geralmente documentado no `.artifacts/<nome-da-
 
 ## Protocolo de Conclusão
 
-Sua tarefa termina apenas após a entrega do `AUDITORIA.md` ou `LAUDO.md`. Ao chamar a ação `complete` do `task-manager`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/AUDITORIA.md` ou `.artifacts/<task-slug>/LAUDO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.
+Sua tarefa termina apenas após a entrega do `AUDITORIA.md` ou `LAUDO.md`. Ao chamar a ação `complete` do `task`, você DEVE obrigatoriamente preencher o campo `artifactFile` com o path **RELATIVO à raiz do projeto**: `.artifacts/<task-slug>/AUDITORIA.md` ou `.artifacts/<task-slug>/LAUDO.md`. É proibido o uso de paths absolutos, nomes de arquivos soltos ou alucinações.
