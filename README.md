@@ -1,138 +1,39 @@
-# Pipa
+# pi-discovery
 
-Pipa é a extensão local de integração, orquestração e defesa do projeto. Ela foi criada para estender as capacidades do Pi Coding Agent e atuar em conjunto com outros packages especializados.
+O `pi-discovery` é um pacote de distribuição focado em **Product Discovery**, **Engenharia de Requisitos** e **Especificação de Projetos**. Ele injeta inteligência de negócios no [Pipa Core](https://github.com/aelinrezende/pipa), transformando a orquestradora genérica em um verdadeiro esquadrão ágil de produto.
+
+Ao invés de programar código-fonte, este pacote é focado em transformar *briefings* caóticos e ideações em especificações técnicas precisas, arquitetura de software, fluxos de UX e backlogs estruturados.
 
 ## 📦 Instalação
 
-A Pipa é distribuída como um pacote otimizado (minificado via Bun), o que garante um carregamento quase instantâneo. Para adicioná-la ao seu projeto, inclua no seu `settings.json` do Pi:
+Adicione o pacote nas configurações do seu Pi (`settings.json` ou `package.json`):
 
 ```json
 "packages": [
-  "git:github.com/aelinrezende/pipa"
+  "git:github.com/pipalabs/pi-discovery"
 ]
 ```
 
-## 🚀 Funcionalidades Principais
+## 🚀 Como Funciona
 
-Com a evolução da Pipa, ela passou a orquestrar fluxos locais complexos, incluindo:
+Ao ser carregado, a arquitetura base da Pipa (Pipa Core) detecta este pacote e configura o ambiente local (`.pi/`) com as regras de domínio exclusivas para a área de Produto, trazendo um "Squad Hiper-Especializado" completo.
 
-### 📋 Gerenciamento de Tarefas & To-do
+### 👑 A Liderança (Barbara - PM)
+A Pipa incorpora a persona da **Barbara (Product Manager)**. A Barbara é a líder estratégica do Discovery: ela recebe os *briefs* iniciais, define o escopo geral, coordena o time de especificação e valida as entregas finais antes de entregar para o desenvolvimento. A Barbara não faz o trabalho braçal — ela delega.
 
-Sistema de _guards_ que exige que o agente crie e reivindique tarefas (tools `task-manager`) antes de executar ações de modificação (como ferramentas de sistema, write, edit, run_command), mantendo o foco e evitando alucinações.
+### 🤝 O Squad de Discovery (Teammates)
+Para extrair a especificação perfeita, a Barbara conta com o seguinte esquadrão:
 
-**Fluxo de Execução (Guard de Tarefas):**
+1. **Isa (Product Owner):** A tradutora do negócio. Ela pega o brief da Barbara e escreve as **regras de negócio** detalhadas, descrevendo atores, fluxos e condições sem ambiguidade.
+2. **Hugo (Arquiteto de Soluções):** O designer do sistema. Baseado nas regras da Isa, ele mapeia a **arquitetura**, definindo módulos, endpoints de API e contratos de dados (DTOs).
+3. **Pamela (UX Designer):** A defensora do usuário. Ela mapeia as jornadas e descobre as **interfaces implícitas** (ex: telas de erro, confirmações e fluxos que não estavam explícitos nas regras).
+4. **Stephanie (Tech Lead):** A avaliadora de risco. Ela lê a arquitetura definida pelo Hugo e elabora uma análise de **complexidade técnica**, apontando riscos e sugerindo a alocação ideal de desenvolvedores.
+5. **Gabriel (Agile Master):** O organizador. Ele pega tudo o que foi validado e quebra em tarefas atômicas, estruturando um **backlog final (CSV)** com estimativas de tempo e dependências prontas para a *sprint*.
 
-```mermaid
-graph TD
-    Start([Início / Solicitação de Ação]) --> Guard[Pipa Guard]
-    Guard --> CheckTask{Agente possui<br>tarefa ativa?}
-    CheckTask -->|Não| Blocked[❌ Ação Bloqueada]
-    Blocked --> CreateTask[Usa `task-manager` para Criar Tarefa]
-    CreateTask --> ClaimTask[Reivindica a Tarefa]
-    ClaimTask --> Execute[Libera Execução da Tool]
-    CheckTask -->|Sim| Execute
-    Execute --> CompleteTask[Conclui a Tarefa]
-```
+## 🛠️ Utilização Prática
 
-### 🤖 Teammates
-
-Suporte nativo para criar, invocar e coordenar subagentes independentes na mesma workspace. A Pipa carrega automaticamente os Teammates a partir de arquivos `.md` presentes nativamente na extensão ou na pasta `.pi/teammates/` do seu projeto. Ela também mescla regras globais de arquivos `SYSTEM_AGENTS.md` se existirem.
-
-**Exemplo de Orquestração (Ciclo de Vida da Tarefa):**
-
-```mermaid
-graph TD
-    Start([Início / NOVA-TAREFA]) --> Orquestrador[Orquestrador]
-    Orquestrador --> PM[1. Analista: Bárbara]
-    PM -->|Ambiguidades?| User([Usuário])
-    User -->|Respostas| PM
-    PM -->|Escopo Definido| Creator[2. Especialista: Aelin]
-    Creator -->|Opções de Design| User
-    User -->|Escolhe Opção| Creator
-    Creator -->|Cria V2 e V3| Reviewer[3. Revisor: Jefferson]
-    Reviewer -->|Levanta Riscos| Creator
-    Creator -.->|Refina Plano| Reviewer
-    Reviewer -->|Trabalho Auditado| User
-    User -->|Validação Final| End([Entrega Concluída])
-```
-
-Para criar um novo colega, basta adicionar um arquivo markdown na pasta (ex: `.pi/teammates/revisor.md`) utilizando a seguinte estrutura de _frontmatter_ e corpo:
-
-```markdown
----
-name: 'revisor'
-description: 'Especialista em revisar os textos gerados, garantir os padrões e levantar riscos.'
-spawnableTeammates:
-  redator: 'Para reescrever ou gerar novos trechos de conteúdo'
-  qa: 'Para realizar a leitura final e validação'
----
-
-Você é um revisor especialista sênior...
-(Suas instruções detalhadas entram aqui)
-```
-
-**Campos utilizados do _frontmatter_:**
-
-- `name`: Nome identificador único do teammate (usado para invocar).
-- `description`: Breve descrição das habilidades do agente.
-- `spawnableTeammates` (Opcional): Lista de nomes (IDs) de outros teammates que este agente tem permissão para invocar.
-
-### 🔔 Notificações Desktop (Toasts)
-
-Feedback visual direto no sistema operacional (via `node-notifier`) sem roubar o foco do seu terminal.
-
-## 🔄 Lógica de Cycle (Model Cycling)
-
-Para otimizar o uso da API e evitar gargalos de _rate limit_, a Pipa implementa uma lógica inteligente de **Cycle de Modelos** para os Teammates.
-
-Em vez de gargalar múltiplos subagentes no mesmo modelo, a Pipa verifica quais modelos estão ociosos no momento e rotaciona o LLM atribuído a cada Teammate ativo (respeitando a sua lista de candidatos). Isso garante paralelismo máximo e evita que um agente fique preso na fila de requisições de outro!
-
-## 🛡️ Defesa
-
-A Pipa atua como uma camada extra de segurança, garantindo nativamente que comandos destrutivos não sejam executados e que arquivos sensíveis (como `.env` e credenciais) fiquem protegidos. Além de injetar lembretes das políticas do projeto no contexto do agente, ela garante que ferramentas de alto risco só possam ser utilizadas caso exista uma tarefa ativa e devidamente rastreada.
-
-## 🧩 Packages Recomendados
-
-Para obter os melhores resultados e extrair o máximo potencial da orquestração da Pipa, recomendamos adicionar os seguintes pacotes complementares ao `.pi/settings.json` da seu workspace:
-
-- `npm:@juicesharp/rpiv-ask-user-question` (excelente para interações via tool `ask_user_question`).
-- `npm:@dietrichgebert/ponytail` (ou outro motor de orquestração equivalente).
-
-<details>
-<summary>⚙️ Configuração Customizada (pipa.config.ts)</summary>
-
-Você pode criar um arquivo `pipa.config.ts` dentro da sua pasta `.pi/` para sobrescrever as configurações padrão da extensão.
-
-Exemplo com todos os campos disponíveis devidamente documentados:
-
-```typescript
-export default {
-  teammate: {
-    /** Modo de cutucão (nudge). Valores aceitos: 'steer' ou 'abort' */
-    nudgeMode: 'steer',
-
-    /** Oculta as tools do log exibido na TUI */
-    hideTools: false,
-
-    /** Oculta o nome do modelo na TUI */
-    hideModelName: false,
-
-    /** IDs de modelos que podem rodar simultaneamente */
-    concurrentlyModels: [],
-
-    cycling: {
-      /** Eventos que causam a rotação de modelos */
-      events: ['error', 'concurrency'],
-
-      /** Lista de modelos permitidos durante a rotação */
-      models: ['claude-3-5-sonnet', 'gpt-4o']
-    }
-  },
-  tasks: {
-    /** Quantidade máxima de tarefas visíveis na TUI */
-    maxVisible: 5
-  }
-};
-```
-
-</details>
+1. Inicie a sessão passando o briefing cru do cliente para a **Barbara**.
+2. A Barbara irá invocar a **Isa** para detalhar as regras de negócio.
+3. Com as regras prontas, ela coordenará o trabalho entre **Pamela**, **Hugo** e **Stephanie** para mapear UX, Arquitetura e Complexidade.
+4. Por fim, o **Gabriel** será acionado para tabular o esforço em um backlog.
+5. A Barbara faz a revisão final e te entrega os artefatos prontos (Regras, Arquitetura, UX, Backlog e Análise de Risco) na pasta `.pi/artifacts/`.
