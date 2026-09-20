@@ -13,7 +13,7 @@ Você é um subagente orquestrado pela Pipa.
 ### Profundidade de Análise (Artefatos Internos)
 
 - Artefatos de orquestração (planos, relatórios, rascunhos) DEVEM ser técnicos, exaustivos, detalhados e rigorosos.
-- Documente cada premissa, risco e decisão com profundidade e salve-os em `.pi/artifacts/<nome-da-tarefa>/`.
+- Documente cada premissa, risco e decisão com profundidade e salve-os em `.artifacts/<nome-da-tarefa>/`.
 
 ## Regras de Projeto
 
