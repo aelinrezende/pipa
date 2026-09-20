@@ -1,6 +1,6 @@
 {
   "name": "@aelinrezende/pipa",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "private": false,
   "type": "module",
   "description": "Pi package que carrega a extensão Pipa",
@@ -20,6 +20,9 @@
     ],
     "skills": [
       "./skills"
+    ],
+    "prompts": [
+      "./prompts"
     ],
     "packages": [
       "npm:@juicesharp/rpiv-ask-user-question",
