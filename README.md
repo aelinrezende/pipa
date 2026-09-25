@@ -1,10 +1,10 @@
 # Pipa
 
-Pipa é a extensão local de integração, orquestração e defesa do projeto. Ela foi criada para estender as capacidades do Pi Coding Agent e atuar em conjunto com outros packages especializados.
+Pipa is the local extension for integration, orchestration, and defense of the project. It was created to extend the capabilities of the Pi Coding Agent and to work alongside other specialized packages.
 
-## 📦 Instalação
+## 📦 Installation
 
-A Pipa é distribuída como um pacote otimizado (minificado via Bun), o que garante um carregamento quase instantâneo. Para adicioná-la ao seu projeto, inclua no seu `settings.json` do Pi:
+Pipa is distributed as an optimized package (minified via Bun), which ensures near-instant loading. To add it to your project, include the following in your Pi `settings.json`:
 
 ```json
 "packages": [
@@ -12,124 +12,124 @@ A Pipa é distribuída como um pacote otimizado (minificado via Bun), o que gara
 ]
 ```
 
-## 🚀 Funcionalidades Principais
+## 🚀 Main Features
 
-Com a evolução da Pipa, ela passou a orquestrar fluxos locais complexos, incluindo:
+As Pipa evolved, it started orchestrating complex local flows, including:
 
-### 📋 Gerenciamento de Tarefas & To-do
+### 📋 Task & To-do Management
 
-Sistema de _guards_ que exige que o agente crie e reivindique tarefas (tools `task-manager`) antes de executar ações de modificação (como ferramentas de sistema, write, edit, run_command), mantendo o foco e evitando alucinações.
+A system of _guards_ that requires the agent to create and claim tasks (the `task-manager` tools) before performing any modification actions (such as system tools, write, edit, run_command), keeping focus and preventing hallucinations.
 
-**Fluxo de Execução (Guard de Tarefas):**
+**Execution Flow (Task Guard):**
 
 ```mermaid
 graph TD
-    Start([Início / Solicitação de Ação]) --> Guard[Pipa Guard]
-    Guard --> CheckTask{Agente possui<br>tarefa ativa?}
-    CheckTask -->|Não| Blocked[❌ Ação Bloqueada]
-    Blocked --> CreateTask[Usa `task-manager` para Criar Tarefa]
-    CreateTask --> ClaimTask[Reivindica a Tarefa]
-    ClaimTask --> Execute[Libera Execução da Tool]
-    CheckTask -->|Sim| Execute
-    Execute --> CompleteTask[Conclui a Tarefa]
+    Start([Start / Action Request]) --> Guard[Pipa Guard]
+    Guard --> CheckTask{Does the agent<br>have an active task?}
+    CheckTask -->|No| Blocked[❌ Action Blocked]
+    Blocked --> CreateTask[Uses `task-manager` to Create Task]
+    CreateTask --> ClaimTask[Claims the Task]
+    ClaimTask --> Execute[Releases Tool Execution]
+    CheckTask -->|Yes| Execute
+    Execute --> CompleteTask[Completes the Task]
 ```
 
 ### 🤖 Teammates
 
-Suporte nativo para criar, invocar e coordenar subagentes independentes na mesma workspace. A Pipa carrega automaticamente os Teammates a partir de arquivos `.md` presentes nativamente na extensão ou na pasta `.pi/teammates/` do seu projeto. Ela também mescla regras globais de arquivos `SYSTEM_AGENTS.md` se existirem.
+Native support for creating, invoking, and coordinating independent subagents in the same workspace. Pipa automatically loads Teammates from `.md` files shipped with the extension or found in the project's `.pi/teammates/` folder. It also merges global rules from `SYSTEM_AGENTS.md` files if they exist.
 
-**Exemplo de Orquestração (Ciclo de Vida da Tarefa):**
+**Orchestration Example (Task Lifecycle):**
 
 ```mermaid
 graph TD
-    Start([Início / NOVA-TAREFA]) --> Orquestrador[Orquestrador]
-    Orquestrador --> PM[1. Analista: Bárbara]
-    PM -->|Ambiguidades?| User([Usuário])
-    User -->|Respostas| PM
-    PM -->|Escopo Definido| Creator[2. Especialista: Aelin]
-    Creator -->|Opções de Design| User
-    User -->|Escolhe Opção| Creator
-    Creator -->|Cria V2 e V3| Reviewer[3. Revisor: Jefferson]
-    Reviewer -->|Levanta Riscos| Creator
-    Creator -.->|Refina Plano| Reviewer
-    Reviewer -->|Trabalho Auditado| User
-    User -->|Validação Final| End([Entrega Concluída])
+    Start([Start / NEW-TASK]) --> Orchestrator[Orchestrator]
+    Orchestrator --> PM[1. Analyst: Bárbara]
+    PM -->|Ambiguities?| User([User])
+    User -->|Answers| PM
+    PM -->|Scope Defined| Creator[2. Specialist: Aelin]
+    Creator -->|Design Options| User
+    User -->|Picks an Option| Creator
+    Creator -->|Creates V2 and V3| Reviewer[3. Reviewer: Jefferson]
+    Reviewer -->|Raises Risks| Creator
+    Creator -.->|Refines Plan| Reviewer
+    Reviewer -->|Audited Work| User
+    User -->|Final Validation| End([Delivery Complete])
 ```
 
-Para criar um novo colega, basta adicionar um arquivo markdown na pasta (ex: `.pi/teammates/revisor.md`) utilizando a seguinte estrutura de _frontmatter_ e corpo:
+To create a new teammate, just add a markdown file to the folder (e.g. `.pi/teammates/reviewer.md`) using the following _frontmatter_ and body structure:
 
 ```markdown
 ---
-name: 'revisor'
-description: 'Especialista em revisar os textos gerados, garantir os padrões e levantar riscos.'
+name: 'reviewer'
+description: 'Specialist in reviewing generated texts, enforcing standards, and raising risks.'
 spawnableTeammates:
-  redator: 'Para reescrever ou gerar novos trechos de conteúdo'
-  qa: 'Para realizar a leitura final e validação'
+  writer: 'To rewrite or generate new content passages'
+  qa: 'To perform the final read and validation'
 ---
 
-Você é um revisor especialista sênior...
-(Suas instruções detalhadas entram aqui)
+You are a senior specialist reviewer...
+(Your detailed instructions go here)
 ```
 
-**Campos utilizados do _frontmatter_:**
+**Frontmatter fields used:**
 
-- `name`: Nome identificador único do teammate (usado para invocar).
-- `description`: Breve descrição das habilidades do agente.
-- `spawnableTeammates` (Opcional): Lista de nomes (IDs) de outros teammates que este agente tem permissão para invocar.
+- `name`: Unique identifier name of the teammate (used to invoke it).
+- `description`: Brief description of the agent's skills.
+- `spawnableTeammates` (Optional): List of names (IDs) of other teammates this agent is allowed to invoke.
 
-### 🔔 Notificações Desktop (Toasts)
+### 🔔 Desktop Notifications (Toasts)
 
-Feedback visual direto no sistema operacional (via `node-notifier`) sem roubar o foco do seu terminal.
+Direct visual feedback in the operating system (via `node-notifier`) without stealing focus from your terminal.
 
-## 🔄 Lógica de Cycle (Model Cycling)
+## 🔄 Cycle Logic (Model Cycling)
 
-Para otimizar o uso da API e evitar gargalos de _rate limit_, a Pipa implementa uma lógica inteligente de **Cycle de Modelos** para os Teammates.
+To optimize API usage and avoid _rate limit_ bottlenecks, Pipa implements smart **Model Cycling** logic for Teammates.
 
-Em vez de gargalar múltiplos subagentes no mesmo modelo, a Pipa verifica quais modelos estão ociosos no momento e rotaciona o LLM atribuído a cada Teammate ativo (respeitando a sua lista de candidatos). Isso garante paralelismo máximo e evita que um agente fique preso na fila de requisições de outro!
+Instead of bottlenecking multiple subagents on the same model, Pipa checks which models are currently idle and rotates the LLM assigned to each active Teammate (respecting its candidate list). This ensures maximum parallelism and keeps an agent from getting stuck in another agent's request queue.
 
-## 🛡️ Defesa
+## 🛡️ Defense
 
-A Pipa atua como uma camada extra de segurança, garantindo nativamente que comandos destrutivos não sejam executados e que arquivos sensíveis (como `.env` e credenciais) fiquem protegidos. Além de injetar lembretes das políticas do projeto no contexto do agente, ela garante que ferramentas de alto risco só possam ser utilizadas caso exista uma tarefa ativa e devidamente rastreada.
+Pipa acts as an extra security layer, natively ensuring that destructive commands are not executed and that sensitive files (such as `.env` and credentials) stay protected. Besides injecting project policy reminders into the agent context, it ensures high-risk tools can only be used when there is an active, properly tracked task.
 
-## 🧩 Packages Recomendados
+## 🧩 Recommended Packages
 
-Para obter os melhores resultados e extrair o máximo potencial da orquestração da Pipa, recomendamos adicionar os seguintes pacotes complementares ao `.pi/settings.json` da seu workspace:
+To get the best results and extract the most from Pipa's orchestration, we recommend adding the following complementary packages to your workspace `.pi/settings.json`:
 
-- `npm:@juicesharp/rpiv-ask-user-question` (excelente para interações via tool `ask_user_question`).
-- `npm:@dietrichgebert/ponytail` (ou outro motor de orquestração equivalente).
+- `npm:@juicesharp/rpiv-ask-user-question` (great for interactions via the `ask_user_question` tool).
+- `npm:@dietrichgebert/ponytail` (or another equivalent orchestration engine).
 
 <details>
-<summary>⚙️ Configuração Customizada (pipa.config.ts)</summary>
+<summary>⚙️ Custom Configuration (pipa.config.ts)</summary>
 
-Você pode criar um arquivo `pipa.config.ts` dentro da sua pasta `.pi/` para sobrescrever as configurações padrão da extensão.
+You can create a `pipa.config.ts` file inside your `.pi/` folder to override the extension's default settings.
 
-Exemplo com todos os campos disponíveis devidamente documentados:
+Example with every available field properly documented:
 
 ```typescript
 export default {
   teammate: {
-    /** Modo de cutucão (nudge). Valores aceitos: 'steer' ou 'abort' */
+    /** Nudge mode. Accepted values: 'steer' or 'abort' */
     nudgeMode: 'steer',
 
-    /** Oculta as tools do log exibido na TUI */
+    /** Hides tools from the log shown in the TUI */
     hideTools: false,
 
-    /** Oculta o nome do modelo na TUI */
+    /** Hides the model name in the TUI */
     hideModelName: false,
 
-    /** IDs de modelos que podem rodar simultaneamente */
+    /** Model IDs that can run simultaneously */
     concurrentlyModels: [],
 
     cycling: {
-      /** Eventos que causam a rotação de modelos */
+      /** Events that trigger model rotation */
       events: ['error', 'concurrency'],
 
-      /** Lista de modelos permitidos durante a rotação */
+      /** List of models allowed during rotation */
       models: ['claude-3-5-sonnet', 'gpt-4o']
     }
   },
   tasks: {
-    /** Quantidade máxima de tarefas visíveis na TUI */
+    /** Maximum number of tasks visible in the TUI */
     maxVisible: 5
   }
 };
