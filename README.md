@@ -107,6 +107,9 @@ Example with every available field properly documented:
 
 ```typescript
 export default {
+  /** Persists teammate log messages and events to files for auditing or later analysis */
+  persistMessages: false,
+
   teammate: {
     /** Nudge mode. Accepted values: 'steer' or 'abort' */
     nudgeMode: 'steer',
@@ -126,7 +129,10 @@ export default {
 
       /** List of models allowed during rotation */
       models: ['claude-3-5-sonnet', 'gpt-4o']
-    }
+    },
+
+    /** Compacts the teammate session after terminal task actions (complete/pause) */
+    compactAfterTaskAction: false
   },
   tasks: {
     /** Maximum number of tasks visible in the TUI */
