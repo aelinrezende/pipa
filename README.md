@@ -17,7 +17,7 @@ pi install npm:@aelinrezende/pipa
 To pin a specific version:
 
 ```bash
-pi install npm:@aelinrezende/pipa@2.3.1
+pi install npm:@aelinrezende/pipa@2.3.2
 ```
 
 ### From GitHub
@@ -36,6 +36,8 @@ pi install --local npm:@aelinrezende/pipa
 
 ## What Pipa Adds
 
+- Interactive onboarding that configures Pipa for any domain.
+- Domain-specific `plan`, `execute`, and `finish` skills generated for the project.
 - Decentralized, persistent teammates with direct collaboration.
 - Structured tasks with ownership, dependencies, squads, and lifecycle enforcement.
 - Session-level todo lists for small execution steps.
@@ -44,6 +46,64 @@ pi install --local npm:@aelinrezende/pipa
 - Permission guards for terminal commands and direct file modifications.
 - Automatic cleanup of noisy model context.
 - English and Brazilian Portuguese interface messages.
+
+## Onboarding and Profiles
+
+Pipa does not ship with a predefined professional focus. When `.pi/PROFILE.md`
+does not exist, it starts an interactive onboarding process to learn what kind
+of work the environment will support, how agents should communicate, which
+constraints they must respect, and how quality should be evaluated.
+
+Pipa uses a single language-neutral onboarding prompt. It first tries to infer
+the conversation language from the user's initial message. If the message is too
+short, language-neutral, ambiguous, or intentionally multilingual, Pipa asks
+which language the user prefers before continuing. During discovery, it also
+confirms the working language for generated agents and artifacts; this may differ
+from both the first-message language and the configured UI locale.
+
+The predefined answers are only discovery aids. Free-form answers and follow-up
+questions allow Pipa to configure any specialized or mixed workflow.
+
+### Example profiles
+
+| Profile | What onboarding may configure |
+| --- | --- |
+| Software engineering | Stack and architecture rules, code quality, testing, deployment, review roles, and technical artifacts |
+| Product management | Discovery, prioritization, user research, metrics, decision records, and product-specialist teammates |
+| Finance | Source requirements, analytical assumptions, review controls, reporting standards, and approval boundaries |
+| Games | Design or engineering discipline, engine or medium, production pipeline, creative constraints, and playtesting |
+| Writing and research | Audience, editorial voice, source standards, fact-checking, review flow, and publication formats |
+| Custom or mixed | The user's own vocabulary, workflow, constraints, tools, quality criteria, and specialist roles |
+
+Onboarding creates the project's operating system:
+
+- `.pi/PROFILE.md`: shared purpose, domain, language, vocabulary, global rules, constraints, and artifact conventions.
+- `.pi/skills/plan/SKILL.md`: how work is understood, investigated, decomposed, risk-assessed, and approved.
+- `.pi/skills/execute/SKILL.md`: how approved work is delegated, performed, validated, and recorded.
+- `.pi/skills/finish/SKILL.md`: how results are reviewed, reported, preserved, and closed or handed off.
+- `.pi/teammates/*.md`: initial specialist roles proposed from the profile and approved by the user.
+
+```mermaid
+flowchart LR
+    Start[First message] --> Language{Language clear?}
+    Language -->|Yes| Discovery[Discover domain, working language, constraints]
+    Language -->|No| Ask[Ask preferred language]
+    Ask --> Discovery
+    Discovery --> Profile[Create PROFILE.md]
+    Profile --> Skills[Generate plan, execute, finish]
+    Skills --> Roles[Propose specialist roles]
+    Roles --> Team[Create approved teammates]
+    Team --> Restart[Restart Pi]
+    Restart --> Ready[Domain-configured Pipa]
+```
+
+`plan`, `execute`, and `finish` are generated for the selected domain; they are
+not generic software-development instructions. The profile, skills, and teammate
+definitions are regular Markdown files and can evolve with the environment.
+
+Teammates use locale-neutral, role-based identifiers by default. If human names
+are preferred, onboarding asks for a language, culture, or naming style instead
+of inferring one from the UI locale or from Pipa's origin.
 
 ## An Opinionated Workflow
 
@@ -76,7 +136,7 @@ not on the critical path of every exchange.
 ### Teammates that stay while they are useful
 
 Teammates are not disposable workers. Once a teammate has context about the
-codebase, the task history, and earlier decisions, its session stays available.
+project, task history, and earlier decisions, its session stays available.
 
 - The `online` action shows which teammates have an active session.
 - A teammate is released only through `dismiss`, with an explicit reason, once it is no longer needed.
@@ -85,15 +145,15 @@ codebase, the task history, and earlier decisions, its session stays available.
 ```mermaid
 flowchart LR
     Main[Main agent / supervisor]
-    Dev[Developer]
-    Rev[Reviewer]
-    Test[Tester]
+    Specialist[Domain specialist]
+    Reviewer[Reviewer]
+    Researcher[Researcher]
 
-    Main -->|goal| Dev
-    Main -->|goal| Rev
-    Dev <-->|chat| Rev
-    Rev -->|spawnableTeammates| Test
-    Test <-->|inbox / chat| Dev
+    Main -->|goal| Specialist
+    Main -->|goal| Reviewer
+    Specialist <-->|chat| Reviewer
+    Reviewer -->|spawnableTeammates| Researcher
+    Researcher <-->|inbox / chat| Specialist
 ```
 
 | | Centralized orchestration | Pipa |
@@ -145,17 +205,17 @@ Create a Markdown file such as `.pi/teammates/reviewer.md`:
 ```markdown
 ---
 name: reviewer
-description: Reviews implementations, verifies requirements, and identifies risks.
+description: Reviews deliverables, verifies requirements, and identifies risks.
 thinking: medium
 spawnableTeammates:
-  developer: Requests implementation corrections
-  tester: Requests additional validation
+  specialist: Requests a domain-specific correction
+  researcher: Requests additional evidence
 ---
 
-You are a senior software reviewer.
+You are a rigorous reviewer for the domain defined in `.pi/PROFILE.md`.
 
 Review the assigned artifact against its requirements. Identify correctness
-issues, missing validation, architectural risks, and unnecessary complexity.
+issues, missing validation, risks, and unnecessary complexity.
 
 Return actionable findings ordered by severity.
 ```
@@ -211,7 +271,7 @@ site.
 Pipa adds guardrails around tool execution, but it is not a security sandbox.
 
 - Terminal commands are validated against a command policy, and commands classified as dangerous are blocked.
-- The main agent must get confirmation before directly using `edit` or `write`.
+- The main agent must get confirmation before directly using `edit` or `write`, except while onboarding creates the approved project configuration.
 - Teammates must claim an active task before using non-management tools.
 
 These checks complement Pi's own security model. They do not replace operating
@@ -230,7 +290,7 @@ Create `.pi/pipa.config.ts` in the project. Every option is optional.
 
 ```typescript
 export default {
-  // Interface and agent-message language: 'en' or 'pt-BR'.
+  // Interface and built-in Pipa message language: 'en' or 'pt-BR'.
   locale: 'en',
 
   // Persist teammate messages.
@@ -273,13 +333,22 @@ corresponding default array instead of being concatenated.
 
 ## Localization
 
-Pipa supports `en` (English) and `pt-BR` (Brazilian Portuguese). Set `locale` in
-`.pi/pipa.config.ts`.
+Pipa supports `en` (English) and `pt-BR` (Brazilian Portuguese) for its interface
+and built-in messages. Set `locale` in `.pi/pipa.config.ts`.
+
+Onboarding is driven by one language-neutral prompt. The agent infers or asks for
+the conversation language, then confirms the working language used by the
+profile, generated skills, teammates, and artifacts. The working language is not
+limited to Pipa's supported interface locales.
 
 ## Package Contents
 
-The distributed Pi package includes the compiled Pipa extension, skills, prompt
-templates, teammate definitions, and resource templates.
+The distributed Pi package includes the compiled Pipa extension, a language-neutral
+onboarding prompt, shared orchestration instructions, and templates for profiles,
+skills, teammates, tasks, and backlog items.
+
+Project-specific skills and teammates are generated during onboarding and stored
+under the project's `.pi/` directory.
 
 ## Distribution
 

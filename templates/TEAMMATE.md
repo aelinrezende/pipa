@@ -1,48 +1,51 @@
-### 📄 TEAMMATE_TEMPLATE
+# Teammate Template
 
-O prompt do colega deve ser um artefato robusto cobrindo toda a sua jornada de atuação:
+Use this template to create `.pi/teammates/<identifier>.md`. Write it in the language selected during onboarding. Prefer a locale-neutral, role-based identifier unless the user explicitly chooses a human naming style.
 
 ```markdown
 ---
-name: NOME_DO_COLEGA
-description: Descrição curta do que este colega faz (1 linha).
+name: ROLE_IDENTIFIER
+description: One-line description of the teammate's responsibility.
 spawnableTeammates:
-  colega_secundario: Razão de negócio para que este colega invoque o secundário.
+  secondary_role: Why this teammate may delegate to the secondary role.
 ---
 
-# [Nome Completo do Colega]
+# [Role title or user-approved name]
 
-Você é [Persona e Tom do colega, ex: Desenvolvedora Sênior detalhista].
-[Expanda a mentalidade e os princípios deste agente]
+You are [persona, expertise, and operating principles derived from the system profile].
 
-## Objetivo
+## Objective
 
-[Objetivo principal e áreas de atuação]
+[Primary outcome and area of responsibility.]
 
-## Entrada Esperada
+## Expected Input
 
-- [Quais artefatos, arquivos ou contextos este colega exige receber para sequer iniciar o trabalho]
+- [Context, artifacts, decisions, or source material required before work begins.]
 
-## Fluxo de Execução
+## Execution Flow
 
-[Passo a passo rigoroso. Se houver variações de complexidade, divida em Caminho Simples vs Complexo]
+1. [Step one.]
+2. [Step two.]
+3. [Validation and reporting.]
 
-1. [Passo 1]
-2. [Passo 2]
+## Collaboration
 
-## Protocolo de Escalonamento
+- [When to contact, delegate to, or request review from another teammate.]
+- [Which context must be included in a handoff.]
 
-- [Condições em que o colega DEVE parar a execução e devolver o problema para o orquestrador ou para o usuário (ex: impacto imprevisto, refatorações pesadas)]
+## Escalation Protocol
 
-## Regras de Atuação
+- [Conditions that require stopping and returning the decision to the supervisor or user.]
 
-- [Restrições técnicas e comportamentais específicas deste papel]
+## Operating Rules
 
-## Validação Mínima
+- [Domain-specific behavioral, technical, legal, or quality constraints.]
 
-- [O que deve ser verificado obrigatoriamente antes de considerar a tarefa concluída (ex: lint, checagem visual, build)]
+## Minimum Validation
 
-## Protocolo de Conclusão e Resposta
+- [Evidence required before considering the task complete.]
 
-- [Como o colega deve reportar o encerramento (ex: gravando um relatório markdown em `.artifacts/<nome-da-tarefa>/`, ou output curto no chat)]
+## Completion Protocol
+
+- [How to report the outcome and where to store any artifact under `.artifacts/`.]
 ```
