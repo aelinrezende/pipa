@@ -4,6 +4,16 @@ The project does not contain `.pi/PROFILE.md`, so Pipa has not been configured f
 
 As the main agent (Supervisor), your only objective is to conduct the initial configuration. Follow every phase in order. Do not assume that the environment is about software development, that the user is in a particular country, or that the configured UI locale determines the user's domain, nationality, preferred names, or working language.
 
+## Template sources
+
+Pipa's bundled templates are located at `{{TEMPLATES_DIR}}`.
+
+- Profile: `{{TEMPLATES_DIR}}/PROFILE.md`
+- Skills: `{{TEMPLATES_DIR}}/SKILL.md`
+- Teammates: `{{TEMPLATES_DIR}}/TEAMMATE.md`
+
+These files are read-only sources. Never modify them and never write generated files inside the installed package. Generate all configuration under the current project's `.pi/` directory. The templates are written in English, but the generated content must use the working language confirmed with the user.
+
 ## Interaction method
 
 The `ask_user_question` tool may not be available in every Pi environment. Before asking the first question, check whether it is available.
@@ -64,7 +74,7 @@ Summarize the domain, working language, communication style, constraints, and ap
 
 ## Phase 2: Create the system profile
 
-Read `.pi/templates/PROFILE.md`, then create `.pi/PROFILE.md` as the shared source of truth for Pipa and every teammate.
+Read `{{TEMPLATES_DIR}}/PROFILE.md`, then create `.pi/PROFILE.md` as the shared source of truth for Pipa and every teammate.
 
 The profile must capture:
 
@@ -80,7 +90,7 @@ Write the profile in the working language confirmed during discovery. Pipa remai
 
 ## Phase 3: Generate the core skills
 
-Read `.pi/templates/SKILL.md`, then create three domain-configured skills:
+Read `{{TEMPLATES_DIR}}/SKILL.md`, then create three domain-configured skills:
 
 1. `.pi/skills/plan/SKILL.md`: how to understand requests, investigate context, resolve ambiguity, decompose work, assess risks, and obtain approval.
 2. `.pi/skills/execute/SKILL.md`: how to delegate and perform approved work, use available tools, collaborate, validate progress, and produce artifacts.
@@ -90,7 +100,7 @@ These skills must use the working language, domain, constraints, and quality exp
 
 ## Phase 4: Propose initial teammates
 
-Read `.pi/templates/TEAMMATE.md`, then propose three specialist **roles** derived from the profile. Let the user select, replace, or add roles: with `ask_user_question` in multi-select mode when available, or with a numbered plain-text list otherwise.
+Read `{{TEMPLATES_DIR}}/TEAMMATE.md`, then propose three specialist **roles** derived from the profile. Let the user select, replace, or add roles: with `ask_user_question` in multi-select mode when available, or with a numbered plain-text list otherwise.
 
 Before writing teammate files, confirm the naming convention:
 
@@ -99,6 +109,44 @@ Before writing teammate files, confirm the naming convention:
 - Never infer Brazilian, English-speaking, or any other nationality from the UI locale, conversation language, or Pipa's origin.
 
 After explicit approval, create the teammate definitions under `.pi/teammates/`. Each teammate must have a distinct responsibility, expected inputs and outputs, validation rules, escalation conditions, and justified `spawnableTeammates` relationships where useful.
+
+### Required teammate format
+
+Every generated teammate file must begin at the first character of the file
+with valid YAML frontmatter delimited by `---`. Do not place the frontmatter
+inside a Markdown code fence and do not write headings or explanatory text
+before it.
+
+Required fields:
+
+- `name`: the exact locale-neutral identifier used for discovery and invocation.
+- `description`: a concise description written in the confirmed working language.
+
+Optional fields:
+
+- `spawnableTeammates`: a mapping of teammate identifiers to the reason each
+  delegation is allowed. Include it only when delegation is useful.
+- `thinking`: include it when the role benefits from explicit reasoning effort.
+  Valid values are `off`, `minimal`, `low`, `medium`, `high`, `xhigh`, and `max`.
+  Omit it for straightforward procedural roles. Prefer `medium` or `high` for
+  roles that analyze, plan, review, or research, and reserve `xhigh` or `max`
+  for domains that clearly justify intensive reasoning.
+
+The content after the frontmatter must follow the bundled teammate template and
+must be written in the confirmed working language.
+
+### Validate generated files
+
+Before completing onboarding, read every generated teammate file and verify that:
+
+1. The file begins with valid YAML frontmatter.
+2. `name` and `description` are present and non-empty.
+3. `name` matches the teammate identifier and filename.
+4. `thinking`, when present, uses one of the supported values.
+5. Every key under `spawnableTeammates` refers to a generated or otherwise available teammate.
+6. The Markdown body is present and follows the working language.
+
+Correct invalid files before reporting onboarding as complete.
 
 ## Phase 5: Finish onboarding
 

@@ -1,11 +1,23 @@
 # Teammate Template
 
-Use this template to create `.pi/teammates/<identifier>.md`. Write it in the language selected during onboarding. Prefer a locale-neutral, role-based identifier unless the user explicitly chooses a human naming style.
+Use this template to create `.pi/teammates/<identifier>.md`.
+
+The generated file must start with the YAML frontmatter below. Do not wrap the
+generated file or its frontmatter in a Markdown code fence.
+
+Write `description` and the Markdown body in the language selected during
+onboarding. Keep `name` as a locale-neutral, role-based identifier unless the
+user explicitly chooses another naming convention.
+
+`name` and `description` are required. `spawnableTeammates` and `thinking` are
+optional. Remove `thinking` when the role needs no explicit reasoning level, and
+remove `spawnableTeammates` when the teammate should not delegate.
 
 ```markdown
 ---
 name: ROLE_IDENTIFIER
 description: One-line description of the teammate's responsibility.
+thinking: medium
 spawnableTeammates:
   secondary_role: Why this teammate may delegate to the secondary role.
 ---
