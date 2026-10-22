@@ -66,14 +66,14 @@ questions allow Pipa to configure any specialized or mixed workflow.
 
 ### Example profiles
 
-| Profile | What onboarding may configure |
-| --- | --- |
-| Software engineering | Stack and architecture rules, code quality, testing, deployment, review roles, and technical artifacts |
-| Product management | Discovery, prioritization, user research, metrics, decision records, and product-specialist teammates |
-| Finance | Source requirements, analytical assumptions, review controls, reporting standards, and approval boundaries |
-| Games | Design or engineering discipline, engine or medium, production pipeline, creative constraints, and playtesting |
-| Writing and research | Audience, editorial voice, source standards, fact-checking, review flow, and publication formats |
-| Custom or mixed | The user's own vocabulary, workflow, constraints, tools, quality criteria, and specialist roles |
+| Profile              | What onboarding may configure                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Software engineering | Stack and architecture rules, code quality, testing, deployment, review roles, and technical artifacts         |
+| Product management   | Discovery, prioritization, user research, metrics, decision records, and product-specialist teammates          |
+| Finance              | Source requirements, analytical assumptions, review controls, reporting standards, and approval boundaries     |
+| Games                | Design or engineering discipline, engine or medium, production pipeline, creative constraints, and playtesting |
+| Writing and research | Audience, editorial voice, source standards, fact-checking, review flow, and publication formats               |
+| Custom or mixed      | The user's own vocabulary, workflow, constraints, tools, quality criteria, and specialist roles                |
 
 Onboarding creates the project's operating system:
 
@@ -117,7 +117,7 @@ persistent.**
 
 ### Autonomy
 
-A teammate does not wait for the main agent to approve each step. It claims a
+A teammate does not wait for the main agent to approve each step. It configures its assigned
 task, works toward the goal it was given, and reports the result. The task guard
 keeps this autonomy accountable: teammates must hold an active task before they
 can use non-management tools.
@@ -156,22 +156,22 @@ flowchart LR
     Researcher <-->|inbox / chat| Specialist
 ```
 
-| | Centralized orchestration | Pipa |
-| --- | --- | --- |
-| Coordination | Everything goes through one coordinator | Direct teammate-to-teammate chat and inbox |
-| Teammate lifetime | Created per request, then discarded | Session kept online until dismissed |
-| Delegation | Only the coordinator delegates | Teammates delegate through `spawnableTeammates` |
-| Accountability | Depends on the coordinator | Task claims, dependencies, and lifecycle enforcement |
+|                   | Centralized orchestration               | Pipa                                                     |
+| ----------------- | --------------------------------------- | -------------------------------------------------------- |
+| Coordination      | Everything goes through one coordinator | Direct teammate-to-teammate chat and inbox               |
+| Teammate lifetime | Created per request, then discarded     | Session kept online until dismissed                      |
+| Delegation        | Only the coordinator delegates          | Teammates delegate through `spawnableTeammates`          |
+| Accountability    | Depends on the coordinator              | Task assignment, dependencies, and lifecycle enforcement |
 
 ## Tools
 
-| Tool | Purpose | Main actions |
-| --- | --- | --- |
-| `task` | Manage operational work assigned to agents | `instantiate`, `setup`, `claim`, `update`, `get`, `list` and further lifecycle actions |
-| `teammates` | Discover, start, communicate with, and dismiss teammates | `instantiate`, `list`, `online`, `chat`, `send-inbox`, `read-inbox`, `dismiss` |
-| `todo` | Track small execution steps inside the current workflow | `instantiate`, `update`, `remove`, `list`, `clear` |
-| `backlog` | Manage persistent project work | `instantiate`, `list`, `select`, `update-frontmatter`, `update-body`, `update-metadata`, `remove` |
-| `docs` | Maintain the project knowledge base | `instantiate`, `list`, `select`, `update-frontmatter`, `update-body`, `update-metadata`, `remove`, `publish` |
+| Tool        | Purpose                                                  | Main actions                                                                                                 |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `task`      | Manage operational work assigned to agents               | `instantiate`, `setup`, `start`, `update`, `get`, `list` and further lifecycle actions                       |
+| `teammates` | Discover, start, communicate with, and dismiss teammates | `instantiate`, `list`, `online`, `chat`, `send-inbox`, `read-inbox`, `dismiss`                               |
+| `todo`      | Track small execution steps inside the current workflow  | `instantiate`, `update`, `remove`, `list`, `clear`                                                           |
+| `backlog`   | Manage persistent project work                           | `instantiate`, `list`, `select`, `update-frontmatter`, `update-body`, `update-metadata`, `remove`            |
+| `docs`      | Maintain the project knowledge base                      | `instantiate`, `list`, `select`, `update-frontmatter`, `update-body`, `update-metadata`, `remove`, `publish` |
 
 ## Task Execution
 
@@ -183,7 +183,7 @@ Dependencies can be:
 - `hard`: completely blocks execution until the dependency is completed.
 - `soft`: records an informational dependency without blocking execution.
 
-Teammates must claim an active task before calling non-management tools. The
+Teammates must configure an assigned task before calling non-management tools. The
 `task`, `teammates`, and `todo` tools remain available so an agent can organize
 its work and recover from a missing task. The main agent acts as the supervisor
 and is not subject to this guard.
@@ -222,12 +222,12 @@ Return actionable findings ordered by severity.
 
 Supported frontmatter fields:
 
-| Field | Required | Description |
-| --- | --- | --- |
-| `name` | Yes | Unique lowercase identifier used to invoke the teammate |
-| `description` | Yes | Short explanation of the teammate's role |
-| `thinking` | No | Thinking level used by the teammate |
-| `spawnableTeammates` | No | Teammates this teammate may instantiate, with the reason for each delegation |
+| Field                | Required | Description                                                                  |
+| -------------------- | -------- | ---------------------------------------------------------------------------- |
+| `name`               | Yes      | Unique lowercase identifier used to invoke the teammate                      |
+| `description`        | Yes      | Short explanation of the teammate's role                                     |
+| `thinking`           | No       | Thinking level used by the teammate                                          |
+| `spawnableTeammates` | No       | Teammates this teammate may instantiate, with the reason for each delegation |
 
 The main agent can instantiate any teammate. Other teammates can instantiate only
 themselves or teammates listed in `spawnableTeammates`.
@@ -272,7 +272,7 @@ Pipa adds guardrails around tool execution, but it is not a security sandbox.
 
 - Terminal commands are validated against a command policy, and commands classified as dangerous are blocked.
 - The main agent must get confirmation before directly using `edit` or `write`, except while onboarding creates the approved project configuration.
-- Teammates must claim an active task before using non-management tools.
+- Teammates must configure an assigned task before using non-management tools.
 
 These checks complement Pi's own security model. They do not replace operating
 system permissions, repository protections, isolated environments, or human
