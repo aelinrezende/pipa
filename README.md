@@ -271,7 +271,6 @@ site.
 Pipa adds guardrails around tool execution, but it is not a security sandbox.
 
 - Terminal commands are validated against a command policy, and commands classified as dangerous are blocked.
-- The main agent must get confirmation before directly using `edit` or `write`, except while onboarding creates the approved project configuration.
 - Teammates must configure an assigned task before using non-management tools.
 
 These checks complement Pi's own security model. They do not replace operating
