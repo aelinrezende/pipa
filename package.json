@@ -1,6 +1,6 @@
 {
   "name": "@aelinrezende/pipa",
-  "version": "2.7.11",
+  "version": "2.8.0",
   "private": false,
   "type": "module",
   "description": "Pi package que carrega a extensão Pipa",
