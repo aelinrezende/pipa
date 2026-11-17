@@ -220,17 +220,23 @@ issues, missing validation, risks, and unnecessary complexity.
 Return actionable findings ordered by severity.
 ```
 
-Supported frontmatter fields:
+Frontmatter fields expected by the teammate definition:
 
-| Field                | Required | Description                                                                  |
-| -------------------- | -------- | ---------------------------------------------------------------------------- |
-| `name`               | Yes      | Unique lowercase identifier used to invoke the teammate                      |
-| `description`        | Yes      | Short explanation of the teammate's role                                     |
-| `thinking`           | No       | Thinking level used by the teammate                                          |
-| `spawnableTeammates` | No       | Teammates this teammate may instantiate, with the reason for each delegation |
+| Field                | Required by the interface | Description                                                                  |
+| -------------------- | ------------------------- | ---------------------------------------------------------------------------- |
+| `name`               | Yes                       | Identifier used to invoke the teammate                                       |
+| `description`        | Yes                       | Short explanation of the teammate's role                                     |
+| `thinking`           | No                        | Thinking level used by the teammate                                          |
+| `spawnableTeammates` | No                        | Teammates this teammate may instantiate, with the reason for each delegation |
 
-The main agent can instantiate any teammate. Other teammates can instantiate only
-themselves or teammates listed in `spawnableTeammates`.
+The loader does not validate required fields or enforce lowercase names; use a
+unique lowercase `name` and provide a `description`. When `thinking` is set, the
+accepted values are `off`, `minimal`, `low`, `medium`, `high`, `xhigh`, and
+`max`.
+
+The main agent can instantiate any teammate. Other teammates can instantiate
+themselves, teammates listed in `spawnableTeammates`, or any teammate when
+`spawnableTeammates` contains the `"*"` key.
 
 ### Model concurrency
 
@@ -296,6 +302,10 @@ export default {
   persistMessages: false,
 
   teammate: {
+    // Maximum number of direct, undismissed teammates per caller.
+    // Finished but not dismissed teammates still count toward the limit.
+    maxDirectTeammates: 5,
+
     // How a teammate processes an incoming nudge.
     nudgeMode: 'steer',
 
@@ -329,6 +339,15 @@ export default {
 
 Project configuration is merged over the defaults above. Arrays replace the
 corresponding default array instead of being concatenated.
+
+`teammate.maxDirectTeammates` (default `5`) caps how many direct teammates a
+caller — main agent or subagent, each counted independently — can hold without
+dismissing them. The count includes running and finished teammates; only an
+effective dismissal frees a slot, so a slot becomes available once the
+dismissed record is removed. When the limit is reached, a new spawn is refused
+before any session or task is created, existing teammates are untouched, and the
+error message asks the caller to dismiss a teammate now or wait for one to
+finish and then dismiss it.
 
 ## Localization
 

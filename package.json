@@ -1,6 +1,6 @@
 {
   "name": "@aelinrezende/pipa",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "private": false,
   "type": "module",
   "description": "Pi package que carrega a extensão Pipa",
@@ -40,13 +40,14 @@
   "scripts": {
     "format": "prettier --write .",
     "build": "bun run ./scripts/build-ext.ts",
-    "ts-check": "tsc --project tsconfig.pipa-core.json --noEmit"
+    "ts-check": "tsc --project tsconfig.pipa-core.json --noEmit",
+    "i18n:check": "bun run ./scripts/check-i18n.ts"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "node-notifier": "^10.0.1",
-    "get-windows": "^9.3.0"
+    "node-notifier": "^12.1.0",
+    "get-windows": "^10.0.0"
   },
   "trustedDependencies": [
     "@google/genai",
