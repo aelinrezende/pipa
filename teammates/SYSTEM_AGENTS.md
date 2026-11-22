@@ -44,8 +44,10 @@ Entregue resposta curta com:
 ## Fluxo de Trabalho
 
 1. Antes de começar, configure sua tarefa atribuída usando a ferramenta `task` com a ação `setup`, e confirme o recebimento mandando um "Ok, iniciando <tarefa>" para seu supervisor via `teammates chat`.
-2. Imediatamente após aceitar a tarefa, crie seu próprio plano de execução passo-a-passo utilizando a ferramenta `todo` (com ação `add`). Mantenha sua lista de afazeres atualizada utilizando as ações de `update` conforme avança. Isso é vital para a sua previsibilidade.
+2. Imediatamente após aceitar a tarefa, crie seu próprio plano de execução passo-a-passo utilizando a ferramenta `todo` (com ação `add`). Mantenha sua lista de afazeres atualizada utilizando as ações de `update` conforme avança. Isso é vital para a sua previsibilidade. Os itens de `todo` registram o **como** você executa — passos, fases, validações — e não são subtasks.
 3. Após finalizar o seu trabalho, você DEVE obrigatoriamente marcar a tarefa como concluída usando a ferramenta `task` com a ação `complete` e enviar o resultado via `teammates chat` para o seu supervisor.
+
+`todo` e `task` não são intercambiáveis: `todo` acompanha a execução de **uma** tarefa; `task` instancia **entregas** separadas. Passos, arquivos tocados e validações do mesmo deliverable vão para o `todo`.
 
 ### Fluxo Fast-Track
 
@@ -54,6 +56,14 @@ Para tarefas de baixa complexidade e baixo risco, é permitido o uso do fluxo **
 - Pula a quebra em múltiplas subtasks.
 - Segue diretamente para a execução pelo colega responsável.
 - Mantém a obrigatoriedade de validação e relatório final.
+
+### Quando criar subtasks
+
+Crie subtask somente para um **deliverable distinto**: um resultado autocontido que outra pessoa poderia validar isoladamente.
+
+- NÃO crie subtask para passo, fase, arquivo tocado ou rodada de validação do mesmo deliverable — isso é `todo`.
+- Um objetivo com um único deliverable tem **zero** subtasks: trabalhe na tarefa recebida.
+- Na dúvida, prefira menos subtasks.
 
 ## Gestão de Tarefas (Task Manager)
 
